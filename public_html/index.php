@@ -9,13 +9,18 @@ define('LIST_LIMIT', 10);
 Cassandra::getInstance()->useKeyspace(CASSANDRA_KEYSPACE);
 
 function listByAuthor($name) {
-    if (empty($_GET['from'])) {
-        $startFrom = null;
-    } else {
-        $startFrom = $_GET['from'];
-    }
+    $results =  Cassandra::getInstance()->cf('posts')->getWhere(array('author' => $name))->getAll();
 
-    return Cassandra::getInstance()->cf('posts')->getWhere(array('author' => $name), null, $startFrom, null, true, null, LIST_LIMIT + 1);
+    usort($results, 'dateSort');
+
+    return array_reverse($results);
+}
+
+function dateSort($a, $b) {
+    if ($a['date'] == $b['date']) {
+        return 0;
+    }
+    return ($a['date'] < $b['date'] ? -1 : 1);
 }
 
 function listByTimeline($name) {
@@ -43,7 +48,6 @@ if (!empty($_GET['author'])) {
     $posts = listByTimeline('main');
     $baseLink = 'index.php?tag=main';
 }
-
 if (count($posts) > LIST_LIMIT) {
     $nextPost = array_pop($posts);
     $nextPostDate = $nextPost['date'];
