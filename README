@@ -1,0 +1,10 @@
+This project is the demonstration code for the Cassandra & PHP talk given on the 2011 Hungarian Web Conference on the 8th of October 2011.
+
+To install the project you need a working Cassandra cluster.
+
+Setting up:
+* Adjust the configuration for your cluster in config.php. By default it's set up to use a local Cassandra server with a default install.
+* Run create.php. This will destroy the keyspace defined in the CASSANDRA_KEYSPACE constant, then create a schema used by the project.
+* Run import.php. This will import the data from posts.php into Cassandra.
+
+The site is ready to run, point your webserver's docroot to public_html.
