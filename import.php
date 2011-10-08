@@ -1,4 +1,10 @@
 <?php
+/**
+ * Imports the data from posts.php and loads it into Cassandra.
+ *
+ * @author Zsolt Szeberényi
+ * @license public domain
+ */
 
 require 'lib/Cassandra/Cassandra.php';
 require 'config.php';

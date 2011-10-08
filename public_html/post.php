@@ -1,23 +1,31 @@
 <?php
+/**
+ * Single post display page
+ *
+ * @author Zsolt Szeberényi
+ * @license public domain
+ */
 
 require '../lib/Cassandra/Cassandra.php';
 require '../config.php';
 
 header('Content-type: text/html; charset=utf-8');
 
-
 if (empty($_GET['id'])) {
+    // We didn't get a post ID, redirect to the post list
     header('Location: /');
     exit;
 }
 
+// Retrieve the post's data from Cassandra
 $cassandra = Cassandra::getInstance();
 $cassandra->useKeyspace(CASSANDRA_KEYSPACE);
 $post = $cassandra->cf('posts')->get((int)$_GET['id']);
 
 if (empty($post)) {
-//    header('Location: /');
-//    exit;
+    // We couldn't retrieve the post, redirect to the post list
+    header('Location: /');
+    exit;
 }
 
 ?><!DOCTYPE html>

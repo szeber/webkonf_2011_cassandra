@@ -1,4 +1,10 @@
 <?php
+/**
+ * The data to be loaded into the Cassandra database
+ *
+ * @var array
+ * @copyright http://sorozatjunkie.hu
+ */
 $posts = array (
   0 =>
   array (
